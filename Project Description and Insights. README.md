@@ -59,6 +59,7 @@ Result:
 ### Understanding K-Means and application.
 
 K-means, in basic terms, is a process that enables analysts to segment data into groups of clusters based on specific similarities that are crucial to understanding customer behaviour. To determine who the High, Mid, and Low spenders are based on their purchase patterns and preferences. 
+
 - Step 1: In applying this process, I selected key fields necessary to get insight into this data. K-means clustering was performed using Household Income, Total Amount Spent, product-level spend variables, purchase channel counts, and customer age. Household Income, Age, Total Amount Spent, Products sold, etc, as seen in the syntax below:
 
 - Step 2: After the Food Clustered Data table is created, I proceed to scale the data using the Scale() function on R. This function 
