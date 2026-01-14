@@ -173,11 +173,6 @@ The relationship between website traffic and website purchases suggests potentia
 Due to the absence of time-based and session-level data, conversion efficiency cannot be conclusively determined. However, this pattern highlights an opportunity to further evaluate website usability, product placement, and checkout experience through targeted user research or surveys.
 
 
-<img width="1366" height="768" alt="Screenshot (90)" src="https://github.com/user-attachments/assets/479e4ef6-3855-4c39-ad0c-d3fddae908a4" />
-
-
-<img width="1366" height="768" alt="Screenshot (92)" src="https://github.com/user-attachments/assets/ed3ee90f-d62f-4dfd-bde8-a24e409980aa" />
-
 
 For a more interactive visualization, kindly click on the link to the Tableau dashboards of the [Customer Segmentation by Expenditure Level](https://public.tableau.com/app/profile/ogochukwu.ezeogu/viz/CustomerSegmentationAnalysisbyExpenditureLevel/Dashboard1)   and [Customer Segmentation Analysis by Age Group](https://public.tableau.com/app/profile/ogochukwu.ezeogu/viz/CustomerSegmentationinsightsbyAgeGroup/Dashboard2)
 
