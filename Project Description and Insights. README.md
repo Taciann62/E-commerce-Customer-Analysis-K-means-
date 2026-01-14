@@ -40,131 +40,12 @@ Business Question:
 ## Data Preparation and Observation
 
 
-
-## Data Analytics
-```R
-library(tidyverse)
-library(dplyr)
-library(lubridate)
-library(skimr)
-library(janitor)
-library(tibble)
-library(ggplot2)
-```
-Import Dataset into R and preview
-```
-head(ifood_df)
-```
-
-After the preview, I proceeded to update the column names to make it more understandable and clear for this analysis.
-```R
-Food_Data<-ifood_df %>% 
-  rename(Household_income = Income, 
-         Kids= Kidhome, 
-         Teen_in_Household = Teenhome,
-         Days_AfterPurchase = Recency, 
-         Wine_Sales = MntWines, 
-         Fruits_Sales = MntFruits, 
-         Meat_Sales = MntMeatProducts,
-         Fish_Sales = MntFishProducts,
-         Sweet_Sales = MntSweetProducts, 
-         Gold_Sales= MntGoldProds, 
-         Total_Amt= MntTotal, 
-         Divorced = marital_Divorced, 
-         Single = marital_Single,
-         Married = marital_Married, 
-         Dating = marital_Together, 
-         Widow = marital_Widow,
-         Cmp_1 = AcceptedCmp1,
-         Cmp_2 = AcceptedCmp2,
-         Cmp_3 = AcceptedCmp3,
-         Cmp_4 = AcceptedCmp4,
-         Cmp_5 = AcceptedCmp5,
-         Last_Cmp = Response,
-         Cmp_overall = AcceptedCmpOverall,
-         Complain = Complain,
-         Cust_Age =Age,
-         Cust_Days = Customer_Days,
-         High_School = `education_2n Cycle`,
-         Basic_Edu = education_Basic,
-         BSC = education_Graduation,
-         MSC = education_Master,
-         PHD = education_PhD,
-         Discounted_Purchase = NumDealsPurchases, 
-         In_Store_Purchase =NumStorePurchases , 
-         Web_Purchases = NumWebPurchases, 
-         Web_Traffic =NumWebVisitsMonth, 
-         Catalogue_Purchases= NumCatalogPurchases,
-         Z_Cos = Z_CostContact,
-         Z_Rev = Z_Revenue,
-         Regular_Prods = MntRegularProds,
-  )
-```
-
-Then, I proceed to review the data to ensure that the names are properly renamed and no column is missing or unclear. 
-```R
-str(Food_Data)
-```
-Ensure the total for the sold items is accurately summed in the Total Amount column(Total_Amt)
-
-```R
-Food_Data<-Food_Data %>% 
-  mutate(Total_Amt =rowSums(select(., Fish_Sales, Fruits_Sales, Meat_Sales, Wine_Sales, Gold_Sales, Sweet_Sales), na.rm = TRUE))
-```
-
-All numeric values were converted to absolute values to ensure consistency, as the dataset did not document refunds or returns. This step was taken to prevent analytical distortion caused by undocumented negative entries.
-```R
-Food_Data <- Food_Data %>% 
-  mutate(across(where(is.numeric), abs))
-```
-
-The columns Z_Revenue and Z_Cost were dropped due to uncertainty about what they represented, as the dictionary provided did not define these columns. 
-```R
-Food_Data<-Food_Data %>% 
-  select(-Z_Cos, -Z_Rev)
-```
-Remove Duplicates and check for missing values: This reduced the data from 2205 to 2021.
-```R
-1. Food_Data<-Food_Data %>% 
-  distinct() 
-
-2. colSums(is.na(Food_Data))
-
-```
-The household income was reviewed, total, average, and standard deviations the  
-
-```R
-Overall_Summary <- Food_Data %>% 
-  summarise(Total_income = sum(Household_income), Avg_income =mean(Household_income), Total_Amt = sum(Total_Amt),
-            Avg_total = mean(Total_Amt), Median = median(Total_Amt), Standard_Deviation = sd(Total_Amt))
-```
-
 | Total Income | Average Income| Total Amount Spent  | Average Amount Spent |Median Amount Spent|Standard Deviation|
 |--------------|---------------|---------------------|----------------------|-------------------|------------------|
 | 104,459,950  | 51687.26      | 	1,228,184          |    607.711           |     397           | 602.396          |
 
 
 Analysis on each product was conducted as well to understand the sales pattern, the most sold, the least sold, and the distribution:
-```R
-Wine_Sales<- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Wine_Sales), Avg_Amt_spent = mean(Wine_Sales), Sales_COunt = n(), SD = sd(Wine_Sales), Med = median(Wine_Sales))
-
-Fruit_Sales<- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Fruits_Sales), Avg_Amt_spent = mean(Fruits_Sales), Sales_COunt = n(), SD = sd(Fruits_Sales), Med = median(Fruits_Sales))
-
-Sweet_Sales <- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Sweet_Sales), Avg_Amt_spent = mean(Sweet_Sales),Sales_Count =n(), SD = sd(Sweet_Sales), Med = median(Sweet_Sales))
-
-Fish_sales <- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Fish_Sales), Avg_Amt_spent = mean(Fish_Sales),Sales_Count =n(), SD = sd(Fish_Sales), Med = median(Fish_Sales))
-
-Gold_Sales <- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Gold_Sales), Avg_Amt_spent = mean(Gold_Sales),Sales_Count =n(), SD = sd(Gold_Sales), Med = median(Gold_Sales))
-
-Meat_Sales <- Food_Data %>% 
-  summarise(Total_Amt_Spent = sum(Meat_Sales), Avg_Amt_spent = mean(Meat_Sales),Sales_Count =n(), SD = sd(Meat_Sales), Med = median(Meat_Sales))
-```
-
 Result: 
 | Product Type | Total Amount | Average Amount | Standard Deviation |
 |--------------|--------------|----------------|--------------------|
@@ -179,125 +60,32 @@ Result:
 
 K-means, in basic terms, is a process that enables analysts to segment data into groups of clusters based on specific similarities that are crucial to understanding customer behaviour. To determine who the High, Mid, and Low spenders are based on their purchase patterns and preferences. 
 - Step 1: In applying this process, I selected key fields necessary to get insight into this data. K-means clustering was performed using Household Income, Total Amount Spent, product-level spend variables, purchase channel counts, and customer age. Household Income, Age, Total Amount Spent, Products sold, etc, as seen in the syntax below:
-```R
-  Foodclustered_data <- Food_Data %>%
-  select(Household_income, Total_Amt, Fish_Sales, Wine_Sales, Meat_Sales, Gold_Sales,
-         Fruits_Sales, Sweet_Sales, Web_Purchases, Web_Traffic, Discounted_Purchase, Catalogue_Purchases, In_Store_Purchase, Cust_Age) %>%
-  drop_na()) 
-```
+
 - Step 2: After the Food Clustered Data table is created, I proceed to scale the data using the Scale() function on R. This function 
-```R
-FoodScaled_data <- scale(Foodclustered_data)
-```
+
 <img width="1366" height="768" alt="Screenshot (86)" src="https://github.com/user-attachments/assets/604f2952-a4c6-4f97-a2e7-a6879f794168" />
 
 The scaled data is then reviewed in a plot called the Elbow method. This Elbow method provides insight into where the cluster is applied in the syntax for what is called the centroid:
-```R
-set.seed(123)
-wss<-sapply(1:10, function(k){kmeans(FoodScaled_data, k, nstart = 20)$tot.withinss})
-
-plot(1:10, wss, type ="b", pch = 19, frame = FALSE, xlab = "Number of Clusters K", ylab = "Total within-cluster sum of squares" )
-```
 Result: 
 <img width="1366" height="768" alt="Screenshot (81)" src="https://github.com/user-attachments/assets/ceb4bcef-b540-4584-a4ec-4a9779ca3928" />
+
 From the result, the elbow section count is 3, which is the number we will be entering in the centers in the syntax below: 
-```R
-set.seed(123)
-Clustred_result<- kmeans(FoodScaled_data, centers = 3, nstart = 25)
-```
 Result:
 <img width="1366" height="768" alt="Screenshot (87)" src="https://github.com/user-attachments/assets/2d9ccf16-ae7b-435e-88f1-9cfe7bcbc1b3" />
+
 I proceeded to view the size of the clusters, and the grouping clearly revealed the customers based on three segments, which were determined by their spending level and income. 
 Clustred_result$size
 [1] 932 531 558
 
 After this was done, the column was created with the Column name, clusters, records, 1,2,3. Following this segmentation, the clusters were added back to the clustered data set from earlier.
 
-```R
-Foodclustered_data <- Foodclustered_data %>% 
-  mutate(Cluster = as.factor(Clustred_result$cluster))
-```
-
-Further analysis was performed on the clusters to determine average income, expenditure, product sales, purchasing preference, and age.
-
-```R
-Food_Analysis <- Foodclustered_data %>%
-  group_by(Cluster) %>% 
-  summarise(Sales_count = n(),
-            Avg_Income = mean(Household_income),
-            Avg_Total_Spend = mean(Total_Amt),
-            Avg_Wine = mean(Wine_Sales),
-            Avg_Sweet = mean(Sweet_Sales),
-            Avg_Fruit = mean(Fruits_Sales),
-            Avg_Fish = mean(Fish_Sales),
-            Avg_web_purchase = mean(Web_Purchases),
-            Avg_Discount = mean(Discounted_Purchase),
-            Avg_Catalogue = mean(Catalogue_Purchases),
-            Avg_Instore = mean(In_Store_Purchase),
-            Avg_Age = mean(Cust_Age),
-            Avg_Meat = mean(Meat_Sales))
-```
-
-But for clarity, it was necessary to properly label the result of the three records provided. 
-```R
-Food_Analysis <- Food_Analysis %>% 
-  mutate(Cluster_Level = case_when(Cluster == 2 ~"High_Spenders", Cluster == 3 ~"Mid_Spenders", Cluster == 1 ~"Low_Spenders", TRUE    ~"Unknown"))
-```
-
-Following this segmentation and data clarity, the clusters were added back to the clustered data set from earlier.
-
-```R
-Foodclustered_data <- Foodclustered_data %>%
-  left_join(Food_Analysis %>% select(Cluster, Cluster_Level), by = "Cluster")
-```
-
 After the customers were adequately segmented, I proceeded to visualize the data on R Studio using ggplot, as seen below:
-```R
-Foodclustered_data %>% 
-  group_by(Cluster_Level) %>% 
-  summarise(across(c(Wine_Sales, Meat_Sales, Sweet_Sales, Fish_Sales, Fruits_Sales, Gold_Sales,
-                     Web_Purchases, In_Store_Purchase, Discounted_Purchase, Catalogue_Purchases), mean))%>%
-  pivot_longer(-Cluster_Level, names_to = "Metric", values_to = "Average") %>% 
-  ggplot(aes(x=Cluster_Level, y = Average, fill = Metric)) + geom_col(position = "dodge")+
-  theme_light() + labs(title = "AVerage Spending Patterns per CLuster")
-```
 
 <img width="803" height="472" alt="Income vs Total Spending" src="https://github.com/user-attachments/assets/a108a921-f20c-4974-a0ec-12f173e106bd" />
 
 Other visualization syntax is seen thus: 
 
-```R
-ggplot(Foodclustered_data, aes(x = Household_income, fill = Cluster_Level)) +
-  geom_histogram(bins = 30, alpha = 0.7, color = "white") +
-  facet_wrap(~Cluster_Level) +
-  theme_minimal() +
-  labs(title = "Income Distribution per Segment",
-       x = "Household Income",
-       y = "Number of Customers") +
-  scale_fill_brewer(palette = "Set1")
-
-ggplot(Foodclustered_data, aes(x = Cust_Age, fill = Cluster_Level)) +
-  geom_histogram(bins = 30, alpha = 0.7, color = "white") +
-  facet_wrap(~Cluster_Level) +
-  theme_minimal() +
-  labs(title = "Income Distribution per Segment",
-       x = "Household Income",
-       y = "Number of Customers") +
-  scale_fill_brewer(palette = "Set1")
-```
-
 After this, I proceed to segment the customers by their age for even more clarity into their purchasing behaviour. The R syntax was made thus, and the final table with each segment created: 
-```R
-Food_Final_Export <- Foodclustered_data %>%
-  mutate(Age_Group = case_when(
-    Cust_Age>=24 & Cust_Age<=40  ~ "Young Adult",
-    Cust_Age>=41 & Cust_Age<=53  ~ "Middle Aged",
-    Cust_Age>=54 & Cust_Age<=60 ~ "Late Career",
-    Cust_Age>=61 & Cust_Age<=73 ~"Retirement" ,
-    Cust_Age >=74 & Cust_Age<=80 ~ "Seniors",
-    TRUE           ~ "Unknown"
-  ))
-```
 This was the age segment from:
 - 24-40 = Young Adult
 - 41-53 = Middle Aged
