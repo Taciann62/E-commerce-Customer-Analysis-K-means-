@@ -13,7 +13,7 @@ strategies, improve customer satisfaction, and enhance overall business strategi
 
 
 ## My Role
-On this project, I assume the role of the data analyst to uncover these insights, provide recommendations that influence decision-making appling K-means to create clusters and segment the customers effectively. As a Junior Data Analyst, this dataset and the requirements allowed me to learn K-means, its purpose, and syntax in R, alongside the Elbow method and IQR.
+On this project, I assume the role of the data analyst to uncover these insights, provide recommendations that influence decision-making by applying K-means to create clusters and segment the customers effectively. As a Junior Data Analyst, this dataset and the requirements allowed me to learn K-means, its purpose, and syntax in R, alongside the Elbow method and IQR.
 
 ### Data Analytics Objective
 - Data Cleaning and Review: Obtained dataset from Kaggle. Explore the dataset, understand its structure, and handle any missing or inconsistent data.
