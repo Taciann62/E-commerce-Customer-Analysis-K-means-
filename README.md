@@ -1,4 +1,4 @@
-## Customer Segmentation Analysis (E-Commerce)
+## E-Commerce Customer Segmentation Analysis 
 
 This project explores customer purchasing behavior for an e-commerce business using K-Means clustering to segment customers into High, Mid, and Low Spenders based on income, age, product-level spending, and purchase channel preferences.
 
