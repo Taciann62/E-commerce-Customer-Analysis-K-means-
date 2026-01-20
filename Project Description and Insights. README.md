@@ -32,7 +32,7 @@ Business Question:
 - Percentage 
 - Website Traffic and Website Purchase vs Category
 
-## Tool
+## Tools
 - Google Sheet - Data Preview
 - R Studio - Data Analysis
 - Tableau - Visualization
