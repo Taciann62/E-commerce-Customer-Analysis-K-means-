@@ -38,6 +38,7 @@ Business Question:
 - Tableau - Visualization
 
 ## Data Preparation and Observation
+The data was wrangled and adequately cleaned for analysis on R Studio after which the following insights were derived.
 
 
 | Total Income | Average Income| Total Amount Spent  | Average Amount Spent |Median Amount Spent|Standard Deviation|
