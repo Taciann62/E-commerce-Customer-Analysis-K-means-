@@ -1,16 +1,11 @@
-# Introduction
-
-This data analytics project was completed as part of the Oasis Infobyte internship program (December Batch 2025).
-The team provided the data through an open-source data platform, Kaggle. It contains a sales record of an e-commerce store, with key fields such as Age, Product type(fish, meat, gold, fruit, sweet, and wine), Purchasing preference, Income, expenditure, and other relevant information necessary to perform this analysis.
-
-### Project Overview
+# Project Overview
 The e-commerce store collected a well-rounded dataset of its customers to get insight into purchasing behaviour, and perform customer segmentation analysis for an e-
 commerce company. By analyzing customer   and purchase patterns, the goal is to group customers into distinct segments. This segmentation can inform targeted marketing
 strategies, improve customer satisfaction, and enhance overall business strategies.
 
 
 ## My Role
-On this project, I assume the role of the data analyst to uncover these insights, provide recommendations that influence decision-making by applying K-means to create clusters and segment the customers effectively. As a Junior Data Analyst, this dataset and the requirements allowed me to learn K-means, its purpose, and syntax in R, alongside the Elbow method and IQR.
+On this project, I assume the role of the data analyst to uncover these insights and provide recommendations that influence decision-making by applying K-means to create clusters and segment the customers effectively. As a Junior Data Analyst, this dataset and the requirements allowed me to learn K-means, its purpose, and syntax in R, alongside the Elbow method and IQR.
 
 ### Data Analytics Objective
 - Data Cleaning and Review: Obtained dataset from Kaggle. Explore the dataset, understand its structure, and handle any missing or inconsistent data.
