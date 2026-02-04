@@ -1,7 +1,4 @@
-# Customer Segmentation Analysis
-
-
-## Introduction
+# Introduction
 
 This data analytics project was completed as part of the Oasis Infobyte internship program (December Batch 2025).
 The team provided the data through an open-source data platform, Kaggle. It contains a sales record of an e-commerce store, with key fields such as Age, Product type(fish, meat, gold, fruit, sweet, and wine), Purchasing preference, Income, expenditure, and other relevant information necessary to perform this analysis.
